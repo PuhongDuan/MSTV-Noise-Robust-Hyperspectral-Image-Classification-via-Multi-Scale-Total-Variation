@@ -1,0 +1,37 @@
+%% Name: MSTV_Demo
+%
+%  Generate the classification results of MSTV method as follows:
+%
+% P. Duan et al.,"Noise-Robust Hyperspectral Image Classification via Multi-Scale Total Variation", accepted to 
+% IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 2019.
+%
+% URL: https://ieeexplore.ieee.org/document/8725896
+% The SVM toolbox which can be downloaded at:
+% http://www.csie.ntu.edu.tw/~cjlin/libsvm/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author: Puhong Duan (puhong_duan@hnu.edu.cn)
+%         2019
+
+%%
+
+%%
+clc,clear
+close all
+%%%%%
+addpath(genpath('functions'))
+addpath(genpath('libsvm-3.22'))
+%% Load hyperspectral image
+path='.\Dataset\';
+inputs = 'IndiaP';% Indian dataset
+location = [path,inputs];
+load (location);
+%% Multi-scale total variation method
+[OA,AA,kappa,CA]=MSTV(img,GroundT);
+%% Evaluation
+OA_mean=mean(OA);
+AA_mean=mean(AA);
+kappa_mean=mean(kappa);
+CA_mean=mean(CA,2);
+disp('%%%%%%%%%%%%%%%%%%% Classification Results of MSTV Method %%%%%%%%%%%%%%%%')
+disp(['OA',' = ',num2str(OA_mean),' ||  ','AA',' = ',num2str(AA_mean),'  ||  ','Kappa',' = ',num2str(kappa_mean)])
+
